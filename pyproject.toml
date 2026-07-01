@@ -1,0 +1,45 @@
+[project]
+name = "tinyharness"
+version = "0.1.0"
+description = "A minimal, readable, from-scratch coding-agent harness with context engineering made visible — built through the HF Context Course"
+requires-python = ">=3.12"
+dependencies = [
+    # LLM provider
+    "anthropic>=0.40",
+    # Utilities
+    "python-dotenv",
+    "rich",
+]
+
+[project.optional-dependencies]
+# Added in Unit 2 when MCP lands — kept optional so the bare loop has no MCP dep
+mcp = ["mcp"]
+dev = [
+    "pytest",
+    "ruff",
+]
+
+[project.scripts]
+tinyharness = "tinyharness.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/tinyharness"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+extend-exclude = ["course-materials"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "slow: hits the real API (skipped by default)",
+    "integration: requires ANTHROPIC_API_KEY",
+]

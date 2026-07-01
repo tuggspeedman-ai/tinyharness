@@ -1,0 +1,28 @@
+# Secrets
+.env
+
+# Internal project state (not part of the public repo)
+PLAN.md
+PLAN-archive.md
+ORIENT.md
+.claude/memory/
+
+# Course reference material (read-only, not our code)
+course-materials/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.ruff_cache/
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+
+# Eval / run outputs
+runs/
+*.log
+
+# OS
+.DS_Store
