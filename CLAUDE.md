@@ -69,8 +69,20 @@ The explicit goal is to finish the course with a **public, open-source, demo-abl
 | `PLAN.md` | Every session start — current state, active unit, decisions |
 | `ORIENT.md` | First-time setup, common commands |
 | `.claude/memory/MEMORY.md` | When making a decision touching an area with prior gotchas |
+| `course-content/units/unitN/` | When working a unit — read the source pages before building the module |
+
+## Course Content (local reference)
+
+The full HF Context Course is checked out locally at **`course-content/`** (gitignored — read-only reference, not our code). **Read the relevant unit here instead of fetching the web page.**
+
+- `course-content/units/unitN/*.mdx` — the course pages for each unit (intro, concepts, hands-on, quizzes). `course-content/units/_toctree.yml` has the canonical page ordering
+- `course-content/projects/` — the course's capstone project scaffolds (real skills under `.agents/skills/`, sub-agents under `.claude/agents/`, hook/settings examples) — concrete references for Units 1/4/5
+- `course-content/SOURCE.md` — provenance (upstream repo + commit) and how to refresh (`make clone-course`)
+
+When working a unit, read its `course-content/units/unitN/` pages first, *then* port the concept into TinyHarness. The course teaches through Claude Code / Codex / OpenCode; our job is to rebuild each idea in our own loop.
 
 ## Course Links
 
 - **Course home:** https://huggingface.co/learn/context-course/unit0/introduction
-- Units: 0 setup · 1 skills · 2 MCP · 3 plugins/workflows · 4 multi-agent · 5 lifecycle/observability · 6 minimal loop (capstone)
+- **Upstream repo:** https://github.com/huggingface/context-course
+- Units: 0 setup · 1 skills · 2 MCP · 3 plugins/workflows · 4 multi-agent · 5 lifecycle/hooks · 6 minimal loop (bonus/capstone)

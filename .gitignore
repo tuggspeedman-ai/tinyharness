@@ -7,7 +7,8 @@ PLAN-archive.md
 ORIENT.md
 .claude/memory/
 
-# Course reference material (read-only, not our code)
+# Course reference material (read-only local copy of the HF course, not our code)
+course-content/
 course-materials/
 
 # Python

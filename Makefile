@@ -13,7 +13,7 @@ help:
 	@echo "  smoke         one Claude API round-trip — verifies key + env"
 	@echo "  demo          run the agent on the toy repo in examples/ (Unit 6+)"
 	@echo "  eval          token + pass-rate table across context strategies (Unit 6+)"
-	@echo "  clone-course  clone the HF context-course repo into course-materials/"
+	@echo "  clone-course  refresh course-content/ from the HF context-course repo"
 
 setup:
 	uv sync
@@ -43,11 +43,17 @@ demo:
 eval:
 	uv run python -m tinyharness.eval
 
+# Refreshes the read-only local copy of the course under course-content/ (gitignored).
+# Pulls the unit pages + capstone project scaffolds, dropping heavy non-reading artifacts.
 clone-course:
-	@mkdir -p course-materials
-	@if [ -d course-materials/context-course ]; then \
-		echo "course-materials/context-course already exists — skipping"; \
-	else \
-		git clone $(COURSE_REPO) course-materials/context-course || \
-		echo "Clone failed — verify the course repo URL (set COURSE_REPO=...)"; \
-	fi
+	@tmp=$$(mktemp -d); \
+	echo "Cloning $(COURSE_REPO) ..."; \
+	git clone --depth 1 $(COURSE_REPO) $$tmp/context-course || { echo "Clone failed — set COURSE_REPO=..."; rm -rf $$tmp; exit 1; }; \
+	mkdir -p course-content/units course-content/projects; \
+	cp -R $$tmp/context-course/units/en/. course-content/units/; \
+	cp -R $$tmp/context-course/projects/. course-content/projects/; \
+	cp $$tmp/context-course/README.md course-content/COURSE-README.md; \
+	find course-content/projects -name 'dag.seed.json' -delete; \
+	find course-content/projects -name 'uv.lock' -delete; \
+	rm -rf $$tmp; \
+	echo "Refreshed course-content/ ($$(find course-content/units -name '*.mdx' | wc -l | tr -d ' ') unit pages)"
